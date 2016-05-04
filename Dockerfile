@@ -23,5 +23,23 @@ EXPOSE 8443 8778 11211 11222
 USER root
 
 # Install required RPMs
-RUN yum install -y mongodb24-mongo-java-driver postgresql-jdbc mysql-connector-java maven hostname && yum clean all
+RUN yum install -y \
+      wget \
+      patch \
+      iproute \
+      mongodb24-mongo-java-driver \
+      postgresql-jdbc \
+      mysql-connector-java \
+      maven hostname \
+      && yum clean all
 
+ADD scripts /tmp/scripts
+
+RUN [ "bash", "-x", "/tmp/scripts/add-openshift-layer.sh" ]
+RUN [ "bash", "-x", "/tmp/scripts/add-openshift-configuration.sh" ]
+
+USER jboss
+
+CMD /opt/jboss/infinispan-server/bin/standalone.sh -c clustered-openshift.xml \
+  -b `ip a s | sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}'` \
+  -bmanagement `ip a s | sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}'`

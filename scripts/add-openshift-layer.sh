@@ -1,24 +1,12 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
-INFINISPAN_HOME=../infinispan-server-8.2.1.Final
-MODULES_HOME=./openshift-layer
-CONFIGURATION_HOME=./openshift-configuration
-BASE_CONFIG_FILE=clustered.xml
-OPENSHIFT_CONFIG_FILE=clustered-openshift.xml
-PATCH_NAME=clustered-openshift.patch
-CONFIG_PATCH=$CONFIGURATION_HOME/$PATCH_NAME
+SCRIPT_DIR=$(dirname $0)
+INFINISPAN_HOME=/opt/jboss/infinispan-server
+MODULES_HOME=$SCRIPT_DIR/openshift-layer
 
 function copy-modules() {
   echo "==== COPYING MODULES ===="
   cp -r $MODULES_HOME/* $INFINISPAN_HOME
-}
-
-function make-configuration() {
-  echo "==== MAKING CONFIGURATION ===="
-  cp $INFINISPAN_HOME/standalone/configuration/$BASE_CONFIG_FILE $INFINISPAN_HOME/standalone/configuration/$OPENSHIFT_CONFIG_FILE
-  cp $CONFIG_PATCH $INFINISPAN_HOME/standalone/configuration
-  patch -d $INFINISPAN_HOME/standalone/configuration $OPENSHIFT_CONFIG_FILE -i $PATCH_NAME > /dev/null
-  rm $INFINISPAN_HOME/standalone/configuration/$PATCH_NAME
 }
 
 function download-modules() {
@@ -38,4 +26,3 @@ function download-binary() {
 
 copy-modules
 download-modules
-make-configuration
