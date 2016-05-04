@@ -1,0 +1,49 @@
+--- clustered.xml	2016-04-04 11:53:18.000000000 +0200
++++ clustered-openshift.xml	2016-05-04 12:58:44.634314585 +0200
+@@ -195,7 +195,7 @@
+             <channels default="cluster">
+                 <channel name="cluster"/>
+             </channels>
+-            <stacks default="${jboss.default.jgroups.stack:udp}">
++            <stacks default="${jboss.default.jgroups.stack:openshift-tcp}">
+                 <stack name="udp">
+                     <transport type="UDP" socket-binding="jgroups-udp"/>
+                     <protocol type="PING"/>
+@@ -288,6 +288,37 @@
+                     <protocol type="MFC"/>
+                     <protocol type="FRAG2"/>
+                 </stack>
++                <stack name="openshift-tcp">
++                    <transport type="TCP" socket-binding="jgroups-tcp"/>
++                    <protocol type="openshift.KUBE_PING"/>
++                    <protocol type="MERGE3"/>
++                    <protocol type="FD_SOCK" socket-binding="jgroups-tcp-fd"/>
++                    <protocol type="FD_ALL"/>
++                    <protocol type="VERIFY_SUSPECT"/>
++                    <protocol type="pbcast.NAKACK2">
++                        <property name="use_mcast_xmit">false</property>
++                    </protocol>
++                    <protocol type="UNICAST3"/>
++                    <protocol type="pbcast.STABLE"/>
++                    <protocol type="pbcast.GMS"/>
++                    <protocol type="MFC"/>
++                    <protocol type="FRAG2"/>
++                </stack>
++                <stack name="openshift-udp">
++                    <transport type="UDP" socket-binding="jgroups-udp"/>
++                    <protocol type="openshift.KUBE_PING"/>
++                    <protocol type="MERGE3"/>
++                    <protocol type="FD_SOCK" socket-binding="jgroups-udp-fd"/>
++                    <protocol type="FD_ALL"/>
++                    <protocol type="VERIFY_SUSPECT"/>
++                    <protocol type="pbcast.NAKACK2"/>
++                    <protocol type="UNICAST3"/>
++                    <protocol type="pbcast.STABLE"/>
++                    <protocol type="pbcast.GMS"/>
++                    <protocol type="UFC"/>
++                    <protocol type="MFC"/>
++                    <protocol type="FRAG2"/>
++                </stack>
+             </stacks>
+         </subsystem>
+         <subsystem xmlns="urn:jboss:domain:io:1.1">

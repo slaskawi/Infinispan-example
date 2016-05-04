@@ -1,0 +1,7 @@
+*.zip
+*.tar.gz
+*.jar
+
+# for local experiments
+infinispan-server-*
+wildfly-*
