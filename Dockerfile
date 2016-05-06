@@ -38,6 +38,8 @@ ADD scripts /tmp/scripts
 RUN [ "bash", "-x", "/tmp/scripts/add-openshift-layer.sh" ]
 RUN [ "bash", "-x", "/tmp/scripts/add-openshift-configuration.sh" ]
 
+RUN chown -R jboss:jboss /opt/jboss
+
 USER jboss
 
 CMD /opt/jboss/infinispan-server/bin/standalone.sh -c clustered-openshift.xml \
