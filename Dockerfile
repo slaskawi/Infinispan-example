@@ -39,6 +39,8 @@ RUN [ "bash", "-x", "/tmp/scripts/add-openshift-layer.sh" ]
 RUN [ "bash", "-x", "/tmp/scripts/add-openshift-configuration.sh" ]
 
 RUN chown -R jboss:jboss /opt/jboss
+RUN chmod -R 777 /opt/jboss
+RUN chmod +x 777 /opt/jboss
 
 USER jboss
 
