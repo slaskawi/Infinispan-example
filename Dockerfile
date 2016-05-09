@@ -18,9 +18,12 @@ LABEL Name="$JBOSS_IMAGE_NAME" \
       io.openshift.s2i.scripts-url="image:///usr/local/s2i"
 
 # Exposed ports
-# 11211 and 11222 are for Hot Rod
+# 11211 is for Memcached
+# 11222 are for Hot Rod
 # 8888 is for Kube PING
-EXPOSE 8443 8778 11211 11222 8888
+# 8181 is for Web Sockets
+# 8080 is for REST
+EXPOSE 11211 11222 8888 8181 8080
 
 USER root
 
@@ -28,6 +31,7 @@ USER root
 RUN yum install -y \
       wget \
       patch \
+      vim \
       iproute \
       mongodb24-mongo-java-driver \
       postgresql-jdbc \

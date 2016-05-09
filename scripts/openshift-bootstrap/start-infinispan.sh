@@ -1,13 +1,10 @@
 #!/bin/bash -e
 
-
-
-
-
 # The server external IP address
 export SERVER_IP=`ip a s | sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}'`
+DEBUG=""
 
-function check_view_pods_permission() {
+function check-view-pods-permission() {
     if [ -z "${OPENSHIFT_KUBE_PING_NAMESPACE+x}" ]; then
         echo "Setting default namespace"
         # Replace with target namespace if needed. Currently we are using the same project which was used for the build.
@@ -35,8 +32,18 @@ function check_view_pods_permission() {
     echo "Openshift permission check pass"
 }
 
-check_view_pods_permission
+function turn-on-debug-if-needed() {
+    if [ -z "$OPENSHIFT_DEBUG" ]; then
+        DEBUG=""
+    else
+        DEBUG="--debug"    
+    fi
+}
 
-/opt/jboss/infinispan-server/bin/standalone.sh --debug -c clustered-openshift.xml \
+
+check_view_pods_permission
+turn-on-debug-if-needed
+
+/opt/jboss/infinispan-server/bin/standalone.sh $DEBUG -c clustered-openshift.xml \
   -b ${SERVER_IP} \
   -bmanagement ${SERVER_IP}
