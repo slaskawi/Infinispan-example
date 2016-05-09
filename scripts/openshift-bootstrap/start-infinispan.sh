@@ -41,7 +41,7 @@ function turn-on-debug-if-needed() {
 }
 
 
-check_view_pods_permission
+check-view-pods-permission
 turn-on-debug-if-needed
 
 /opt/jboss/infinispan-server/bin/standalone.sh $DEBUG -c clustered-openshift.xml \
