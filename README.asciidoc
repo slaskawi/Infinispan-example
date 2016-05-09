@@ -1,0 +1,44 @@
+== Openshift image for Infinispan
+
+This repository contains modified https://github.com/jboss-dockerfiles/infinispan[Infinispan Docker image], all necessary scripts and templates to run Infinispan cluster in the Openshift environment.
+
+== How to run it
+
+* Make sure you have properly configured Openshift installation with Docker registry. The easiest way to get started is to follow the steps from https://docs.openshift.org/latest/getting_started/administrators.html[Openshift Origin guide].
+* Infinispan cluster uses https://github.com/jboss-openshift/openshift-ping[Kube PING] and requires a Service Account. The easiest way to add one is to run:
+[source,bash]
+----
+oc policy add-role-to-user view system:serviceaccount:$(oc project -q):default -n $(oc project -q)
+----
+
+* Finally, build an Infinispan app by running:
+
+[source,bash]
+----
+oc new-app --strategy='docker' https://github.com/slaskawi/Infinispan-example
+----
+
+The above command will create all required resources to start an infinispan cluster.
+
+CAUTION: The Infinispan Openshift image is configured in such a way that it assumes running on the same project as it was built. If the running configuration is different, please look at the environment variables and adjust settings.
+
+== Environment variables
+
+Openshift allows to configure https://docs.openshift.com/enterprise/3.0/dev_guide/environment_variables.html[environment variables]. Below is a list of supported configuration options by this image:
+
+|====================================================================================================
+|Variable name                 |Meaning                            |Default               |Example
+|DEBUG                         |Turn on debug mode on port 8787    |<not set>             |TRUE
+|OPENSHIFT_KUBE_PING_NAMESPACE |Infinispan cluster project name    |the same as the build |ispn
+|OPENSHIFT_KUBE_PING_LABELS    |Labels for Infinispan pods         |<not set>             |cluster
+|====================================================================================================
+
+== Still to be done
+
+[ ] Preconfigured templates
+[ ] Liveness probe
+[ ] Readiness probe
+[ ] Multi tenancy
+[ ] Scaling out/in policies
+[ ] 0-dependency JGroups PING Protocol
+
