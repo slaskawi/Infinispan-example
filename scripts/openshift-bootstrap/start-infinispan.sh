@@ -37,6 +37,6 @@ function check_view_pods_permission() {
 
 check_view_pods_permission
 
-/opt/jboss/infinispan-server/bin/standalone.sh -c clustered-openshift.xml \
+/opt/jboss/infinispan-server/bin/standalone.sh --debug -c clustered-openshift.xml \
   -b ${SERVER_IP} \
   -bmanagement ${SERVER_IP}
