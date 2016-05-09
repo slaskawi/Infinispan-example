@@ -36,5 +36,7 @@
         <module name="org.jgroups"/>
         <module name="org.jboss.dmr"/>
         <module name="net.oauth.core"/>
+        <!-- Neede for UndertowServerFactory in Kube PING -->
+        <module name="io.undertow.core"/>
     </dependencies>
 </module>
