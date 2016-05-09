@@ -84,9 +84,6 @@
             <logger category="com.arjuna">
                 <level name="WARN"/>
             </logger>
-            <logger category="com.arjuna">
-                <level name="WARN"/>
-            </logger>
             <logger category="org.openshift.ping">
                 <level name="DEBUG"/>
             </logger>
