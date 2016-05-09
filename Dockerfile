@@ -18,7 +18,9 @@ LABEL Name="$JBOSS_IMAGE_NAME" \
       io.openshift.s2i.scripts-url="image:///usr/local/s2i"
 
 # Exposed ports
-EXPOSE 8443 8778 11211 11222
+# 11211 and 11222 are for Hot Rod
+# 8888 is for Kube PING
+EXPOSE 8443 8778 11211 11222 8888
 
 USER root
 
