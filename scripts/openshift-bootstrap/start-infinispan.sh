@@ -8,12 +8,14 @@
 export SERVER_IP=`ip a s | sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}'`
 
 function check_view_pods_permission() {
-    if [ -n "${OPENSHIFT_KUBE_PING_NAMESPACE}" ]; then
+    if [ -z "${OPENSHIFT_KUBE_PING_NAMESPACE+x}" ]; then
+        echo "Setting default namespace"
         # Replace with target namespace if needed. Currently we are using the same project which was used for the build.
         export OPENSHIFT_KUBE_PING_NAMESPACE=${OPENSHIFT_BUILD_NAMESPACE}
     fi
 
-    if [ -n "${OPENSHIFT_KUBE_PING_LABELS}" ]; then
+    if [ -z "${OPENSHIFT_KUBE_PING_LABELS+x}" ]; then
+        echo "Setting default labels"
         # Reaplce with labels for infinispan cluster. Empty string means that all pods should be included.
         export OPENSHIFT_KUBE_PING_LABELS=""
     fi
