@@ -37,12 +37,11 @@ ADD scripts /tmp/scripts
 
 RUN [ "bash", "-x", "/tmp/scripts/add-openshift-layer.sh" ]
 RUN [ "bash", "-x", "/tmp/scripts/add-openshift-configuration.sh" ]
+RUN [ "bash", "-x", "/tmp/scripts/add-openshift-bootstrap-scripts.sh" ]
 
 RUN chown -R jboss:jboss /opt/jboss
 RUN chmod -R a+rwX /opt/jboss
 
 USER jboss
 
-CMD /opt/jboss/infinispan-server/bin/standalone.sh -c clustered-openshift.xml \
-  -b `ip a s | sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}'` \
-  -bmanagement `ip a s | sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}'`
+CMD /opt/jboss/infinispan-server/bin/start-infinispan.sh
