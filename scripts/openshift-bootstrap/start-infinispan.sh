@@ -45,8 +45,8 @@ function turn-on-debug-if-needed() {
 function add-user() {
   if [[ -z "${INFINSPAN_USER+x}" || -z "${INFINSPAN_PASSWORD+x}" ]]; then
       echo "Setting default user"
-      INFINSPAN_USER=DEFAULT_USER
-      INFINSPAN_PASSWORD=DEFAULT_PASSWORD
+      INFINSPAN_USER=$DEFAULT_USER
+      INFINSPAN_PASSWORD=$DEFAULT_PASSWORD
   fi
   
   echo "Username: $INFINSPAN_USER"
