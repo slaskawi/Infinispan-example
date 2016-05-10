@@ -1,8 +1,10 @@
 #!/bin/bash -e
 
 # The server external IP address
-export SERVER_IP=`ip a s | sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}'`
+SERVER_IP=`ip a s | sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}'`
 DEBUG=""
+DEFAULT_USER=ispn
+DEFAULT_PASSWORD=ispn
 
 function check-view-pods-permission() {
     if [ -z "${OPENSHIFT_KUBE_PING_NAMESPACE+x}" ]; then
@@ -40,9 +42,19 @@ function turn-on-debug-if-needed() {
     fi
 }
 
+function add-user() {
+  if [ -z "${INFINSPAN_USER+x}" || -z "${INFINSPAN_PASSWORD+x}"]; then
+      echo "Setting default user"
+      INFINSPAN_USER=DEFAULT_USER
+      INFINSPAN_PASSWORD=DEFAULT_PASSWORD
+  fi
+  /opt/jboss/infinispan-server/bin/add-user.sh -u $INFINSPAN_USER -p $INFINSPAN_PASSWORD -r ApplicationRealm -e -s  
+}
+
 
 check-view-pods-permission
 turn-on-debug-if-needed
+add-user
 
 /opt/jboss/infinispan-server/bin/standalone.sh $DEBUG -c clustered-openshift.xml \
   -b ${SERVER_IP} \

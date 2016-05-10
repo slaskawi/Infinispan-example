@@ -31,14 +31,16 @@ Openshift allows to configure https://docs.openshift.com/enterprise/3.0/dev_guid
 |DEBUG                         |Turn on debug mode on port 8787    |<not set>             |TRUE
 |OPENSHIFT_KUBE_PING_NAMESPACE |Infinispan cluster project name    |the same as the build |ispn
 |OPENSHIFT_KUBE_PING_LABELS    |Labels for Infinispan pods         |<not set>             |cluster
+|INFINISPAN_USER               |Username used for REST             |ispn                  |myUser
+|INFINISPAN_PASSWORD           |Password used for REST             |ispn                  |myPassword
 |====================================================================================================
 
 == Still to be done
 
-[ ] Preconfigured templates
-[ ] Liveness probe
-[ ] Readiness probe
-[ ] Multi tenancy
-[ ] Scaling out/in policies
-[ ] 0-dependency JGroups PING Protocol
+* [ ] Preconfigured templates
+* [ ] Liveness probe
+* [ ] Readiness probe
+* [ ] Multi tenancy
+* [ ] Scaling out/in policies
+* [ ] 0-dependency JGroups PING Protocol
 
