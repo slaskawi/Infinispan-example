@@ -43,12 +43,12 @@ function turn-on-debug-if-needed() {
 }
 
 function add-user() {
-  if [ -z "${INFINSPAN_USER+x}" || -z "${INFINSPAN_PASSWORD+x}"]; then
+  if [[ -z "${INFINSPAN_USER+x}" || -z "${INFINSPAN_PASSWORD+x}" ]]; then
       echo "Setting default user"
       INFINSPAN_USER=DEFAULT_USER
       INFINSPAN_PASSWORD=DEFAULT_PASSWORD
   fi
-  /opt/jboss/infinispan-server/bin/add-user.sh -u $INFINSPAN_USER -p $INFINSPAN_PASSWORD -r ApplicationRealm -e -s  
+  /opt/jboss/infinispan-server/bin/add-user.sh -u $INFINSPAN_USER -p $INFINSPAN_PASSWORD -r ManagementRealm -e -s
 }
 
 
