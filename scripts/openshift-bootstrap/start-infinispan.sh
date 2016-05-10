@@ -49,8 +49,8 @@ function add-user() {
       INFINSPAN_PASSWORD=$DEFAULT_PASSWORD
   fi
   
-  echo "Username: $INFINSPAN_USER"
-  echo "Password: $INFINSPAN_PASSWORD"
+  #echo "Management Username: $INFINSPAN_USER"
+  #echo "Management Password: $INFINSPAN_PASSWORD"
   
   /opt/jboss/infinispan-server/bin/add-user.sh -u $INFINSPAN_USER -p $INFINSPAN_PASSWORD -r ManagementRealm -e -s
 }
